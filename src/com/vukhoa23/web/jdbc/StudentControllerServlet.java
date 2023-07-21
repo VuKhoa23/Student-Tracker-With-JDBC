@@ -49,7 +49,7 @@ public class StudentControllerServlet extends HttpServlet {
 		request.setAttribute("student_list", students);
 		// send data to JSP
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list-students-jstl.jsp");
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);	
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
