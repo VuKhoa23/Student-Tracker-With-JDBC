@@ -42,6 +42,57 @@ public class StudentControllerServlet extends HttpServlet {
 	 *      response)
 	 */
 	
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		try {
+			// read the command param
+			String command = request.getParameter("command");
+			// if reading the command failed
+			if(command == null) {
+				command="LIST";
+			}
+			switch (command) {
+			case "LIST":
+				listStudent(request, response);
+				break;
+			
+			default:
+				listStudent(request, response);
+			//
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		try {
+			// read the command param
+			String command = request.getParameter("command");
+			// if reading the command failed
+			if(command == null) {
+				command="LIST";
+			}
+			switch (command) {
+			case "ADD":
+				addStudent(request, response);
+				break;
+			
+			default:
+				listStudent(request, response);
+			//
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void listStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// get student from dbUtil
 		List<Student> students = studentDbUtil.getStudents();
@@ -52,13 +103,20 @@ public class StudentControllerServlet extends HttpServlet {
 		dispatcher.forward(request, response);	
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			listStudent(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	private void addStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		// read student info
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		// create new student
+		Student temp = new Student(firstName, lastName, email);
+		// add student to db
+		studentDbUtil.addStudent(temp);
+			
+		
+		// send redirect
+		response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
+		
 	}
 
 

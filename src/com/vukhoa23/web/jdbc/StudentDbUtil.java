@@ -12,6 +12,7 @@ public class StudentDbUtil {
 	}
 	public List<Student> getStudents() throws Exception{
 		List<Student> students = new ArrayList<>();
+		// declare jdbc objects
 		Connection myConn = null;
 		Statement myStmt = null;
 		ResultSet myRs = null;
@@ -52,5 +53,29 @@ public class StudentDbUtil {
 			}
 		}
 		
+	}
+	public void addStudent(Student temp) throws SQLException {
+		// declare jdbc objects
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		try {
+			// get a connection
+			myConn = dataSource.getConnection();
+			// create sql query
+			String query = "insert into student "
+					+ "(first_name, last_name, email) "
+					+ "values (?, ?, ?)";
+			
+			myStmt = myConn.prepareStatement(query);
+			myStmt.setString(1, temp.getFirstName());
+			myStmt.setString(2, temp.getLastName());
+			myStmt.setString(3, temp.getEmail());
+			// execute query, base 1
+			myStmt.execute();
+		}finally {
+			myConn.close();
+			myStmt.close();
+		}
+
 	}
 }
