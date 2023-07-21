@@ -27,13 +27,20 @@
           <th>First name</th>
           <th>Last name</th>
           <th>Email</th>
+          <th>Action</th>
         <c:forEach var="student" items="${student_list}">
-        <tr>
-            <!-- These will call the approriate getters -->
-            <td>${student.firstName}</td>
-            <td>${student.lastName }</td>
-            <td>${student.email }</td>
-         </tr>
+          <!-- Set up a link for each student using url tag -->
+          <c:url var="studentLink" value="StudentControllerServlet">
+            <c:param name="command" value="LOAD"/>
+            <c:param name="studentID" value="${student.id }" />
+          </c:url>
+          <tr>
+              <!-- These will call the approriate getters -->
+              <td>${student.firstName}</td>
+              <td>${student.lastName }</td>
+              <td>${student.email }</td>
+              <td><a href="${studentLink}">Update</a></td>
+           </tr>
          </c:forEach>
        </table>
     </div>

@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Add student</title>
+		<title>Update student</title>
 		 <link rel="stylesheet" type="text/css" href="styles/styles.css" >
          <link rel="stylesheet" type="text/css" href="styles/add-student-style.css" >
 	</head>
@@ -9,23 +9,24 @@
             <h2 id="header">Student tracker</h2>
         </div>
         <div id="container">
-            <h3>Add student</h3>
+            <h3>Update student</h3>
             <form action="StudentControllerServlet" method="POST">
             
-                <input type="hidden" name="command" value="ADD"/>
+                <input type="hidden" name="command" value="UPDATE"/>
+                <input type="hidden" name="studentID" value="${student.id}"/>
                 <table>
                   <tbody>
                     <tr>
                       <td><label>First name: </label></td>
-                      <td><input type="text" name="firstName" placeholder="Enter first name"/></td>
+                      <td><input type="text" name="firstName" value="${student.firstName}"/></td>
                     </tr>
                     <tr>
                       <td><label>Last name: </label></td>
-                      <td><input type="text" name="lastName" placeholder="Enter last name"/></td>
+                      <td><input type="text" name="lastName" value="${student.lastName}"/></td>
                     </tr>
                     <tr>
                       <td><label>Email: </label></td>
-                      <td><input type="text" name="email" placeholder="Enter email"/></td>
+                      <td><input type="text" name="email" value="${student.email}"/></td>
                     </tr>
                     <tr>
                       <td><label></label></td>

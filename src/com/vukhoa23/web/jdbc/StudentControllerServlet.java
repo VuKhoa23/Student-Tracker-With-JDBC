@@ -29,7 +29,7 @@ public class StudentControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		super.init();
 		
-		// create instance of studentDButil
+		// create instance of studentDButil, run FIRST when server is created
 		try {
 			studentDbUtil = new StudentDbUtil(dataSource);
 		} catch(Exception e) {
@@ -57,7 +57,9 @@ public class StudentControllerServlet extends HttpServlet {
 			case "LIST":
 				listStudent(request, response);
 				break;
-			
+			case "LOAD":
+				loadStudent(request, response);
+				break;
 			default:
 				listStudent(request, response);
 			//
@@ -82,7 +84,9 @@ public class StudentControllerServlet extends HttpServlet {
 			case "ADD":
 				addStudent(request, response);
 				break;
-			
+			case "UPDATE":
+				updateStudent(request, response);
+				break;
 			default:
 				listStudent(request, response);
 			//
@@ -91,6 +95,34 @@ public class StudentControllerServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		// read student info from form data
+		int id = Integer.parseInt(request.getParameter("studentID"));
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		// create new student object
+		Student student = new Student(id, firstName, lastName, email);
+		// perform db update
+		studentDbUtil.updateStudent(student);
+		// send back the list-student.jsp
+		response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
+
+	}
+
+	private void loadStudent(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		// read student id
+		String studentID = request.getParameter("studentID");
+		// get student by id
+		Student student = studentDbUtil.getStudent(studentID);
+		// set student's information to request
+		request.setAttribute("student", student);
+		// send student's information to jsp page
+		RequestDispatcher dispatcher = request.getRequestDispatcher("update-student-form.jsp");
+		dispatcher.forward(request, response);	
+
 	}
 
 	private void listStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -115,6 +147,7 @@ public class StudentControllerServlet extends HttpServlet {
 			
 		
 		// send redirect
+		
 		response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
 		
 	}

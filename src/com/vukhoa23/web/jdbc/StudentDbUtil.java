@@ -73,9 +73,84 @@ public class StudentDbUtil {
 			// execute query, base 1
 			myStmt.execute();
 		}finally {
-			myConn.close();
-			myStmt.close();
+			try {
+				myConn.close();
+				myStmt.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 
+	}
+	public Student getStudent(String studentID) throws Exception {
+		Student student = null;
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		int id;
+	
+		try {
+			// convert string id to int id
+			id = Integer.parseInt(studentID);
+			// get connection to the DB
+			myConn = dataSource.getConnection();
+			// create sql query
+			String query = "select * from student where id=?";
+			//create prepared statement
+			myStmt = myConn.prepareStatement(query);
+			// set params
+			myStmt.setInt(1, id);
+			// execute query
+			myRs = myStmt.executeQuery();
+			//retrieve the datas
+			if(myRs.next()) {
+				String firstName = myRs.getString("first_name");
+				String lastName = myRs.getString("last_name");
+				String email = myRs.getString("email");
+				// create new student base on retrieved infos
+				student = new Student(id, firstName, lastName, email);
+			}
+			else {
+				throw new Exception("Can not find student with id = " + id);
+			}
+			return student;
+		}finally {
+			try {
+				myConn.close();
+				myStmt.close();
+				myRs.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void updateStudent(Student student) throws Exception{
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		try {
+			// get connection
+			myConn = dataSource.getConnection();
+			// create update query
+			String query = "update student "+
+							"set first_name=?, last_name=?, email=? "+
+							"where id=? ";
+			// prepare myStmt
+			System.out.println(student.toString());
+			myStmt = myConn.prepareStatement(query);
+			myStmt.setString(1, student.getFirstName());
+			myStmt.setString(2, student.getLastName());
+			myStmt.setString(3, student.getEmail());
+			myStmt.setInt(4, student.getId());
+			// set params
+			myStmt.execute();
+		}finally {
+			try {
+				myConn.close();
+				myStmt.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
