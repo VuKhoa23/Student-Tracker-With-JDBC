@@ -1,6 +1,7 @@
 package com.vukhoa23.web.jdbc;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -63,6 +64,9 @@ public class StudentControllerServlet extends HttpServlet {
 			case "DELETE":
 				deleteStudent(request, response);
 				break;
+			case "SEARCH":
+				searchStudent(request, response);
+				break;
 			default:
 				listStudent(request, response);
 			//
@@ -73,7 +77,6 @@ public class StudentControllerServlet extends HttpServlet {
 		}
 	}
 	
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -100,6 +103,22 @@ public class StudentControllerServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+
+	private void searchStudent(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String searchValue = request.getParameter("searchValue");
+		
+		List<Student> students = null;
+		
+		students = studentDbUtil.searchStudent(searchValue);
+		
+		// add students to the request
+		request.setAttribute("student_list", students);
+		// send data to JSP
+		RequestDispatcher dispatcher = request.getRequestDispatcher("list-students-jstl.jsp");
+		dispatcher.forward(request, response);	
+		
 	}
 	
 	private void deleteStudent(HttpServletRequest request, HttpServletResponse response)throws Exception {

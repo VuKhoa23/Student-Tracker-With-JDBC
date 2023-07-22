@@ -22,6 +22,11 @@
   <div id="main-container">
     <div id="main-content">
       <button class="add-student-button" onclick="window.location.href='add-student-form.jsp'">Add student</button>
+      <form action="StudentControllerServlet">
+        <input type="text" name="searchValue"/>
+        <input type="hidden" name="command" value="SEARCH"/>
+        <button class="add-student-button" type="submit">Search </button>
+      </form>
       <table>
         <tr>
           <th>First name</th>
