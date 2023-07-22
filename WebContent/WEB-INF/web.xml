@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
-  <display-name>10-web-student-tracker</display-name>
-  <welcome-file-list>
-  	<welcome-file>StudentControllerServlet</welcome-file>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	id="WebApp_ID" version="4.0">
+	<display-name>Home</display-name>
+	<welcome-file-list>
+		<welcome-file>StudentControllerServlet</welcome-file>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>add-student-form</servlet-name>
+		<jsp-file>/add-student-form.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>add-student-form</servlet-name>
+		<url-pattern>/add-student-form</url-pattern>
+	</servlet-mapping>
 </web-app>
