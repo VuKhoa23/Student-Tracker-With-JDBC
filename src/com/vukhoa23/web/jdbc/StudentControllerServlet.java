@@ -108,7 +108,7 @@ public class StudentControllerServlet extends HttpServlet {
 		// delete student using dbUtil
 		studentDbUtil.deleteStudent(id);
 		// send back jsp page
-		listStudent(request, response);
+		response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
 	}
 
 	private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws Exception{

@@ -10,7 +10,7 @@
         </div>
         <div id="container">
             <h3>Add student</h3>
-            <form action="StudentControllerServlet" method="POST">
+            <form action="StudentControllerServlet" method="POST" name="studentForm" onSubmit="return validateForm();">
             
                 <input type="hidden" name="command" value="ADD"/>
                 <table>
@@ -38,5 +38,6 @@
         
         <div style="clear: both;"></div>
         <a href="StudentControllerServlet?command=LIST">Back to student view</a>
+        <script type="text/javascript" src="js/student-validation.js"></script>  
 	</body>
 </html>
